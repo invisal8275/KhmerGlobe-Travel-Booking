@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block title %}{{ booking.reference }} | KhmerGlobe{% endblock %}{% block content %}
+<section class="section"><div class="container narrow"><span class="eyebrow">Booking reference</span><h1>{{ booking.reference }}</h1><div class="formcard">
+<p><b>Trip:</b> {% if booking.tour %}{{ booking.tour.title }}{% elif booking.hotel %}{{ booking.hotel.name }}{% else %}Custom trip{% endif %}</p>
+{% if booking.tour %}<p><b>Destination:</b> {{ booking.tour.destination.name }}</p>{% elif booking.hotel %}<p><b>Destination:</b> {{ booking.hotel.destination.name }}</p>{% endif %}
+<p><b>Start date:</b> {{ booking.start_date }}</p>{% if booking.end_date %}<p><b>End date:</b> {{ booking.end_date }}</p>{% endif %}
+<p><b>Travellers / guests:</b> {{ booking.travelers }}</p><p><b>Full payment due:</b> ${{ booking.total_amount }}</p>
+<p><b>Booking status:</b> <span class="status {{ booking.status }}">{{ booking.get_status_display }}</span></p><p><b>Payment status:</b> {{ booking.get_payment_status_display }}</p><p><b>Payment method:</b> {{ booking.get_payment_method_display }}</p>
+{% for payment in booking.payments.all %}<p><b>Payment proof:</b> {{ payment.get_status_display }}{% if payment.receipt_url %} · <a href="{{ payment.receipt_url }}" target="_blank" rel="noopener">View receipt</a>{% endif %}</p>{% endfor %}
+{% if booking.payment_status == "paid" %}<a class="btn" href="{% url 'booking_invoice' booking.reference %}">Download PDF invoice</a>{% endif %}
+<p class="muted">Your booking is not confirmed until the team verifies the itinerary, supplier availability and payment.</p>
+{% if booking.payment_status != "paid" and booking.status != "cancelled" %}<a class="btn" href="{% url 'trip_checkout' booking.reference %}">Continue to checkout</a>{% endif %}
+{% if booking.status == "pending" %}<form method="post" action="{% url 'cancel_booking' booking.reference %}">{% csrf_token %}<button class="btn danger" type="submit">Cancel request</button></form>{% endif %}
+{% if booking.status == "completed" %}<a class="btn" href="{% url 'submit_review' booking.reference %}">Leave a review</a>{% endif %}
+</div><p><a class="textlink" href="{% url 'customer_dashboard' %}">← Back to my bookings</a></p></div></section>{% endblock %}

@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap');
+:root{--navy:#123b52;--navy2:#0b2a3d;--teal:#13a58b;--gold:#e5ad53;--bg:#f4f8fa;--paper:#fff;--ink:#183343;--muted:#687d89;--line:#e2ebef;--shadow:0 15px 40px #123b5212}
+[data-theme=dark]{--bg:#0c1b25;--paper:#132936;--ink:#edf5f7;--muted:#a8bbc5;--line:#2b414d;--shadow:0 15px 40px #0004}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 "DM Sans",sans-serif}a{color:inherit;text-decoration:none}.container{width:min(1160px,calc(100% - 36px));margin:auto}.topbar{background:var(--navy2);color:#dce8ed;font-size:11px}.topinner{height:34px;display:flex;justify-content:space-between;align-items:center}.header{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--line)}.nav{height:74px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{font:800 20px Outfit;color:var(--navy);display:flex;align-items:center;gap:9px;white-space:nowrap}.brand em{color:var(--teal);font-style:normal}.logo{width:39px;height:39px;border-radius:12px;background:var(--teal);color:white;display:grid;place-items:center}.nav nav{display:flex;gap:20px;color:var(--muted);font-size:13px;font-weight:700}.nav nav a:hover{color:var(--teal)}.navright{display:flex;align-items:center;gap:8px}.navright form{margin:0}.ghost,.menu{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:8px 11px;color:var(--ink)}.userlabel{font-size:12px}.menu{display:none}.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:8px;padding:11px 17px;background:var(--teal);color:white;font-weight:800;cursor:pointer}.btn:hover{background:#0d8e78}.btn.small{padding:8px 12px;font-size:12px}.btn.outline{background:transparent;border:1px solid #ffffff8c}.btn.danger{background:#c74c59}.hero{background:linear-gradient(90deg,#092b40e8,#092b4060),url('/static/travel/images/destinations/phnom_penh.jpg') center/cover;padding:92px 0 120px;color:white}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.14em;font-weight:800;color:var(--teal)}.hero .eyebrow{color:#9ce4d5}.hero h1{font:800 clamp(40px,6vw,66px)/1.05 Outfit;margin:15px 0}.accent{color:#67ddc2}.hero p{max-width:620px;color:#e0ebef;font-size:16px}.actions{display:flex;gap:10px;margin-top:24px}.searchbox{position:relative;margin-top:-60px;background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:14px;padding:18px}.tabs{display:flex;gap:8px;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:15px}.tabs a{padding:7px 14px;border-radius:7px;color:var(--muted);font-weight:700;font-size:13px}.tabs .active,.tabs a:hover{background:#13a58b18;color:var(--teal)}.searchrow{display:grid;grid-template-columns:1.5fr 1fr auto;gap:12px;align-items:end}.searchrow label,.formcard label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:800;margin-bottom:5px}.searchrow input,.searchrow select,.formcard input,.formcard select,.formcard textarea,.filterbar select,.inlineform select{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px;background:var(--bg);color:var(--ink);min-height:42px}.section{padding:68px 0}.section.soft{background:var(--paper)}.sectionhead{display:flex;justify-content:space-between;align-items:end;margin-bottom:24px}.sectionhead h2{font:700 31px Outfit;margin:6px 0}.grid{display:grid;gap:18px}.grid.four{grid-template-columns:repeat(4,1fr)}.grid.three{grid-template-columns:repeat(3,1fr)}.place{height:220px;border-radius:12px;background-size:cover;background-position:center;display:flex;align-items:end;padding:16px;color:white}.place h3{font:700 22px Outfit;margin:0}.place p{font-size:11px;margin:3px 0 0;color:#e4edf1}.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 4px 15px #123b5208}.card>img{width:100%;height:185px;object-fit:cover}.cardbody{padding:16px}.card h3{font:700 19px Outfit;margin:7px 0}.card p{font-size:13px;color:var(--muted);min-height:42px}.meta{font-size:11px;color:var(--teal);font-weight:800}.cardfoot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:12px}.cardfoot strong,.price{color:var(--teal)}.cardfoot small{font-size:10px;color:var(--muted)}.textlink{color:var(--teal);font-weight:800}.pagehero{padding:55px 0;background:var(--navy);color:white}.pagehero h1{font:700 42px Outfit;margin:8px 0}.pagehero p{color:#d2e0e6}.filterbar{display:flex;gap:10px;max-width:430px;margin-bottom:22px}.detailgrid{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start}.detailimage{width:100%;border-radius:13px;max-height:450px;object-fit:cover}.detailgrid h1{font:700 36px Outfit;margin:10px 0}.narrow{max-width:720px}.formcard{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:25px;box-shadow:var(--shadow)}.formcard p{margin:0 0 15px}.formcard ul.errorlist{color:#c33;font-size:12px}.formcard input[type=checkbox]{width:auto}.formcard textarea{min-height:95px}.messages{padding-top:14px}.message{padding:10px 14px;border-radius:8px;background:#dff5eb;color:#126b4f;margin-bottom:7px}.muted{color:var(--muted)}.tablewrap{overflow:auto;background:var(--paper);border:1px solid var(--line);border-radius:10px;margin:22px 0}table{border-collapse:collapse;width:100%;font-size:12px}th,td{padding:12px 13px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}th{background:var(--bg);color:var(--muted);font-size:10px;text-transform:uppercase}.status{padding:4px 8px;border-radius:30px;background:#fff0d7;color:#93600a;font-size:10px;font-weight:800}.status.confirmed,.status.completed{background:#dff5eb;color:#12704f}.status.cancelled{background:#ffe2e4;color:#a42c38}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 0}.stats div{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:18px}.stats small{display:block;color:var(--muted)}.stats strong{font:700 27px Outfit}.inlineform{display:flex;gap:5px}.inlineform select{min-width:120px;padding:6px}.inquiryline{padding:12px 0;border-bottom:1px solid var(--line);font-size:12px}.inquiryline span{margin-left:10px;color:var(--muted)}.footer{background:#0b293b;color:#d5e1e7;padding:42px 0 18px}.footerbrand{color:white}.footgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:25px}.footgrid h4{font:700 15px Outfit;color:white;margin:0 0 10px}.footgrid p,.footgrid a{display:block;font-size:12px;color:#b8c8d0;margin:5px 0}.footgrid a:hover{color:#6edcc5}.copyright{border-top:1px solid #ffffff20;margin-top:25px;padding-top:15px;font-size:10px;color:#9db2be;text-align:center}.messages+.hero{margin-top:0}
+@media(max-width:900px){.nav nav{display:none;position:absolute;top:74px;left:0;right:0;background:var(--paper);padding:18px 22px;flex-direction:column;border-bottom:1px solid var(--line)}.nav nav.open{display:flex}.menu{display:block}.navright .userlabel{display:none}.grid.four{grid-template-columns:repeat(2,1fr)}.grid.three{grid-template-columns:repeat(2,1fr)}.footgrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.container{width:calc(100% - 28px)}.topinner{font-size:9px}.nav{height:66px}.nav nav{top:66px}.brand{font-size:16px}.navright{gap:4px}.navright .btn{display:none}.hero{padding:65px 0 95px}.hero h1{font-size:43px}.searchbox{padding:13px}.searchrow{grid-template-columns:1fr}.section{padding:50px 0}.sectionhead{display:block}.sectionhead h2{font-size:26px}.grid.four,.grid.three,.detailgrid{grid-template-columns:1fr}.place{height:190px}.footgrid,.stats{grid-template-columns:1fr 1fr}.formcard{padding:18px}.pagehero h1{font-size:34px}}
+
+/* Presentation upgrade: destination and hotel photography */
+.card>img{display:block;width:100%;height:215px;object-fit:cover;background:#dce7ec}
+.tourcard,.hotelcard{display:flex;flex-direction:column;min-height:100%}
+.tourcard .cardbody,.hotelcard .cardbody{display:flex;flex:1;flex-direction:column}
+.tourcard .cardfoot,.hotelcard .cardfoot{margin-top:auto}
+.detailhero{display:grid;grid-template-columns:1.08fr .92fr;gap:36px;align-items:center;margin-bottom:34px}
+.detailhero .detailimage{width:100%;height:430px;max-height:none;object-fit:cover;border-radius:16px;box-shadow:var(--shadow)}
+.detailhero h1{font:800 clamp(30px,4vw,46px)/1.1 Outfit;margin:10px 0 14px}
+.detailhero p{color:var(--muted)}
+.detailhero .lead{font-size:18px;color:var(--ink);font-weight:600}
+.pricebox{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--paper);border:1px solid var(--line);padding:15px;border-radius:12px;margin-top:20px}
+.pricebox strong{font:800 24px Outfit;color:var(--teal)}
+.pricebox span{font-size:11px;color:var(--muted);flex:1}
+.detailcolumns{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:22px;align-items:start}
+.detailmain{display:grid;gap:18px}
+.contentpanel{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:22px;box-shadow:0 5px 20px #123b5208}
+.contentpanel h2,.contentpanel h3{font-family:Outfit;margin:0 0 12px}
+.longcopy{color:var(--muted);line-height:1.8}
+.longcopy p{white-space:pre-line;margin:0 0 12px}
+.bookingaside{position:sticky;top:95px}
+.bookingaside p{color:var(--muted);font-size:13px}
+.btn.block{display:flex;width:100%;margin:16px 0}
+.tiny{font-size:11px!important}
+.externalhotel{display:inline-block;margin-top:14px}
+.hotelintro{margin-bottom:22px}
+.hotelintro h2{font:700 27px Outfit;margin:0 0 6px}
+.rate-disclaimer{font-size:11px;color:var(--muted);margin-top:22px;padding:12px 14px;background:var(--paper);border:1px solid var(--line);border-radius:9px}
+@media(max-width:800px){.detailhero,.detailcolumns{grid-template-columns:1fr}.detailhero .detailimage{height:280px}.bookingaside{position:static}}
+
+/* Prominent clickable social contact buttons in the footer */
+.footer-contact-note{color:#c8dbe3;font-size:13px;line-height:1.6;margin:0 0 13px}
+.footer .social-contact-btn{display:flex;align-items:center;gap:12px;width:100%;max-width:290px;min-height:58px;padding:10px 13px;margin:0 0 10px;border:1px solid rgba(255,255,255,.18);border-radius:11px;color:#fff;text-decoration:none;background:rgba(255,255,255,.07);transition:transform .18s ease,background .18s ease,border-color .18s ease}
+.footer .social-contact-btn:hover{transform:translateY(-2px);background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.4)}
+.footer .social-contact-btn .social-icon{display:grid;place-items:center;width:35px;height:35px;flex:0 0 35px;border-radius:10px;background:#229ed9;color:white;font-weight:800;font-size:19px}
+.footer .facebook-btn .social-icon{background:#1877f2;font-family:Arial,sans-serif}
+.footer .social-contact-btn>span:nth-child(2){display:flex;flex-direction:column;gap:3px}
+.footer .social-contact-btn strong{font-size:13px;color:#fff}
+.footer .social-contact-btn small{font-size:11px;color:#d1e1e7}
+.footer .social-contact-btn .button-arrow{margin-left:auto;font-size:18px;color:#cce4eb}
+.footer .footer-email-link{display:inline-block;margin-top:3px;font-size:12px;color:#d1e1e7}
+@media(max-width:760px){.footer .social-contact-btn{max-width:100%}}
+
+/* Accepted payment methods strip at the bottom of the website */
+.payment-methods{background:#f4f7fa;border-top:1px solid #e1e8ed;padding:25px 0 22px}
+.payment-inner{display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap}
+.payment-inner h3{margin:0;color:#617486;font-size:15px;font-weight:500}
+.payment-inner img{display:block;width:min(324px,100%);height:auto;object-fit:contain}
+@media(max-width:560px){.payment-inner{gap:12px;flex-direction:column}.payment-inner h3{font-size:14px}}
+
+/* Cambodian payment options: KHQR, ABA and ACLEDA */
+.payment-logos{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap}
+.payment-logos .international-payment-logos{display:block;width:min(324px,100%);height:auto;object-fit:contain}
+.khmer-payment-logos{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.khmer-payment-logos>span{height:48px;min-width:82px;padding:6px 10px;border:1px solid #e1e8ed;border-radius:7px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
+.khmer-payment-logos strong{font:800 16px Arial,sans-serif;letter-spacing:-.3px}
+.khmer-payment-logos small{font:600 9px Arial,sans-serif;margin-top:3px}
+.khqr-logo strong{color:#c51e32}.khqr-logo small{color:#475569}
+.aba-logo strong{color:#1454a1}.aba-logo small{color:#e34b3d;letter-spacing:1.5px}
+.acleda-logo strong{color:#0870a5;font-size:14px}.acleda-logo small{color:#7a8b99}
+@media(max-width:560px){.payment-logos{gap:12px}.khmer-payment-logos{justify-content:center}}
+
+/* User-supplied Cambodian payment and bank logo artwork */
+.khmer-payment-logos .khmer-payment-logo{display:block;width:82px;height:48px;padding:4px;object-fit:contain;background:#fff;border:1px solid #e1e8ed;border-radius:7px}
+.khmer-payment-logos .aba-image{object-fit:contain}
+.khmer-payment-logos .other-bank-image{object-fit:contain}
+.khmer-payment-logos .khqr-image{width:112px;padding:0;object-fit:contain}
+
+/* Multi-step trip builder and live quote */
+.tripbuilder-section{background:#f4f8fa}
+.tripbuilder-layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:start}
+.tripbuilder-form{display:grid;gap:17px;min-width:0}
+.builder-step,.trip-summary-card,.checkout-card{background:var(--paper);border:1px solid var(--line);border-radius:15px;padding:23px;box-shadow:0 7px 24px #123b5208}
+.step-heading{display:flex;gap:13px;align-items:flex-start;margin-bottom:20px}
+.step-heading>span{width:35px;height:35px;display:grid;place-items:center;border-radius:10px;background:#e3f5f1;color:#078b78;font-weight:800;flex:0 0 35px}
+.step-heading h2{font:700 21px Outfit;margin:0 0 4px;color:var(--ink)}
+.step-heading p{margin:0;color:var(--muted);font-size:13px}
+.builder-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.builder-fields>div{min-width:0}
+.builder-fields .field-wide{grid-column:1/-1}
+.builder-fields label,.builder-step>label{display:block;font-size:12px;font-weight:700;color:var(--ink);margin-bottom:7px}
+.builder-fields input,.builder-fields select,.builder-step select{width:100%;min-height:45px;border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--paper);color:var(--ink)}
+.builder-fields.compact{grid-template-columns:180px 1fr;margin-top:13px;align-items:end}
+.field-hint{font-size:11px;color:var(--muted);line-height:1.55;margin:9px 0 0}
+.align-end{padding-bottom:10px}
+.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.transport-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.choice-card{position:relative;display:flex;flex-direction:column;gap:6px;padding:13px;border:1px solid var(--line);border-radius:10px;background:var(--paper);cursor:pointer;min-height:78px}
+.choice-card:has(input:checked){border-color:var(--teal);background:#effaf7;box-shadow:inset 0 0 0 1px var(--teal)}
+.choice-card input{position:absolute;right:12px;top:13px;accent-color:var(--teal)}
+.choice-title{font-size:13px;font-weight:700;color:var(--ink);padding-right:22px}
+.choice-card small{font-size:11px;color:var(--muted);line-height:1.4}
+.payment-choice-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.payment-mark{font:800 16px Arial,sans-serif;display:inline-flex;align-items:center;justify-content:center;width:58px;height:30px;border-radius:5px;background:white;border:1px solid var(--line)}
+.visa-mark{color:#17449b;font-style:italic}
+.khqr-mark{color:#d52135}
+.builder-actions{padding:4px 0 20px}
+.btn.large{padding:15px 22px;font-size:15px}
+.trip-summary-card{position:sticky;top:95px}
+.summary-top{padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:9px}
+.summary-top h2{font:700 23px Outfit;margin:6px 0}
+.summary-top p{font-size:12px;color:var(--muted);margin:0}
+.summary-line{display:flex;justify-content:space-between;gap:12px;padding:9px 0;font-size:12px;color:var(--muted)}
+.summary-line strong{color:var(--ink);text-align:right}
+.summary-divider{height:1px;background:var(--line);margin:8px 0}
+.summary-total{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:13px 0;font-weight:800}
+.summary-total strong{font:800 25px Outfit;color:var(--teal)}
+.summary-disclaimer{font-size:10px;line-height:1.55;color:var(--muted);background:#f4f8fa;padding:11px;border-radius:8px;margin:10px 0 0}
+.login-reminder{background:#fff8e9;border:1px solid #f0dba9;color:#6d5319;padding:13px 15px;border-radius:10px;font-size:13px}
+.login-reminder a{font-weight:800;color:#856000}
+.checkout-page{max-width:760px}
+.checkout-card{padding:28px}
+.checkout-success-icon{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#e4f7ef;color:#09825f;font-size:23px;font-weight:900}
+.checkout-card h2{font:700 24px Outfit;margin:12px 0 4px}
+.checkout-card h3{font:700 17px Outfit;margin:18px 0 9px}
+.checkout-summary{background:#f4f8fa;border:1px solid var(--line);border-radius:10px;padding:15px;margin:16px 0}
+.checkout-summary p{font-size:13px;color:var(--muted);margin:5px 0}
+.payment-selected{padding:14px;border:1px solid var(--line);border-radius:9px;margin:15px 0;font-size:13px}
+.gateway-notice{padding:15px;border:1px solid #f0dba9;border-radius:10px;background:#fff8e9;color:#6d5319;font-size:13px;line-height:1.6;margin:14px 0}
+.btn.block{display:block;text-align:center}
+@media(max-width:900px){.tripbuilder-layout{grid-template-columns:1fr}.trip-summary-card{position:static;grid-row:1}.builder-fields{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.builder-step,.trip-summary-card,.checkout-card{padding:17px}.builder-fields,.builder-fields.compact,.choice-grid,.transport-grid,.payment-choice-grid{grid-template-columns:1fr}.builder-fields .field-wide{grid-column:auto}.summary-total strong{font-size:22px}}
+
+/* KHQR checkout panel and scan-to-pay popup */
+.khqr-checkout-panel{margin:18px 0;padding:18px;border:1px solid #dce7ed;border-radius:14px;background:#f7fafb}
+.khqr-panel-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.khqr-panel-heading h3{font:700 20px Outfit;margin:5px 0}
+.khqr-panel-heading p{font-size:12px;color:var(--muted);line-height:1.5;margin:0 0 13px}
+.khqr-chip{background:#e52432;color:#fff;border-radius:7px;padding:7px 10px;font-weight:800;font-size:12px}
+.khqr-inline-preview{display:flex;justify-content:center;padding:14px 0}
+.khqr-inline-preview img{width:min(220px,70%);height:auto;max-height:340px;object-fit:contain;border:7px solid #fff;border-radius:12px;box-shadow:0 3px 16px #102e4415}
+.khqr-amount-due{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 14px;background:#fff;border:1px solid #dce7ed;border-radius:10px;margin:12px 0}
+.khqr-amount-due span{font-size:13px;color:var(--muted);font-weight:700}
+.khqr-amount-due strong{font:800 24px Outfit;color:#0b9b80}
+.khqr-proof-form{display:grid;gap:8px;margin-top:15px}
+.khqr-proof-form label{font-size:12px;font-weight:700}
+.khqr-proof-form input{width:100%;padding:12px;border:1px solid var(--line);border-radius:8px}
+.payment-submitted-note{padding:12px;background:#eaf8f2;border-radius:8px;color:#146b4d;font-size:12px;line-height:1.5}
+.khqr-modal{display:none;position:fixed;inset:0;z-index:9999;align-items:center;justify-content:center;padding:18px}
+.khqr-modal.is-open{display:flex}
+.khqr-modal-backdrop{position:absolute;inset:0;background:rgba(5,20,35,.78);backdrop-filter:blur(4px)}
+.khqr-modal-card{position:relative;z-index:1;width:min(480px,100%);max-height:94vh;overflow:auto;background:#fff;border-radius:18px;padding:24px;text-align:center;box-shadow:0 24px 80px #0005}
+.khqr-modal-close{position:absolute;right:13px;top:8px;border:0;background:#edf2f5;color:#19364a;width:34px;height:34px;border-radius:50%;font-size:25px;cursor:pointer}
+.khqr-modal-card h2{font:800 24px Outfit;margin:8px 0}
+.khqr-modal-card>p{font-size:12px;color:var(--muted);line-height:1.55}
+.khqr-modal-card>img{display:block;width:min(290px,100%);max-height:52vh;object-fit:contain;margin:14px auto;border:1px solid #e6edf1;border-radius:12px}
+.khqr-modal-recipient{font-size:12px;color:var(--muted);margin:8px 0}
+body.khqr-modal-open{overflow:hidden}
+@media(max-width:480px){.khqr-modal-card{padding:18px}.khqr-modal-card>img{width:min(250px,100%)}}
+
+/* Receipt submission, customer history and staff payment review */
+.khqr-proof-form input[type=file]{background:#fff;border:1px dashed #b8cbd5;padding:12px;border-radius:8px;width:100%;font-size:12px}
+.payment-review-form{display:grid;gap:7px;min-width:180px}
+.payment-review-form input{width:100%;min-width:150px;padding:8px;border:1px solid var(--line);border-radius:7px;font-size:11px}
+.payment-review-form .btn{white-space:nowrap}
+.payment-review-form .danger{background:#b52e3b;color:white}
+.history-actions{display:flex;flex-direction:column;gap:5px;min-width:100px}
+.revenue-stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.revenue-stats>div{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:17px;min-width:0}
+.revenue-stats small{display:block;color:var(--muted);font-size:11px;margin-bottom:8px}
+.revenue-stats strong{font:800 22px Outfit;color:var(--teal);overflow-wrap:anywhere}
+@media(max-width:760px){.revenue-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Keep all hero calls-to-action aligned inside the hero content container. */
+.hero .actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.hero .actions .btn{margin:0}
+
+/* Compact QR-only payment action on checkout */
+.khqr-checkout-panel>#showKhqrButton{width:100%;margin:8px 0 4px}

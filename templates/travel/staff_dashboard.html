@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Staff Dashboard | KhmerGlobe{% endblock %}
+{% block content %}
+<section class="section"><div class="container">
+<span class="eyebrow">Staff control center</span><h1>Revenue & booking dashboard</h1>
+<div class="stats revenue-stats">
+<div><small>Total bookings</small><strong>{{ booking_count }}</strong></div>
+<div><small>Pending bookings</small><strong>{{ pending_count }}</strong></div>
+<div><small>Customers</small><strong>{{ customer_count }}</strong></div>
+<div><small>All-time verified revenue</small><strong>${{ revenue|floatformat:2 }}</strong></div>
+<div><small>Today's paid booking value</small><strong>${{ daily_revenue|floatformat:2 }}</strong></div>
+<div><small>This month's paid booking value</small><strong>${{ monthly_revenue|floatformat:2 }}</strong></div>
+<div><small>Paid bookings</small><strong>{{ paid_count }}</strong></div>
+<div><small>Unpaid / pending payment</small><strong>{{ unpaid_count }}</strong></div>
+</div>
+
+<h2>Payment verification queue</h2>
+<p class="muted">Check the receipt and verify the incoming amount in your bank account before approving. Approval marks the full booking as paid and confirmed.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Booking / Customer</th><th>Method</th><th>Amount</th><th>Transaction reference</th><th>Receipt</th><th>Status</th><th>Decision</th></tr></thead>
+<tbody>{% for p in payments %}
+<tr>
+<td><strong>{{ p.booking.reference }}</strong><br>{{ p.booking.customer.username }}</td>
+<td>{{ p.method }}</td><td>${{ p.amount|floatformat:2 }}</td>
+<td>{{ p.transaction_reference|default:"—" }}</td>
+<td>{% if p.receipt_url %}<a class="textlink" href="{{ p.receipt_url }}" target="_blank" rel="noopener">Open receipt ↗</a>{% else %}No file{% endif %}</td>
+<td>{{ p.get_status_display }}</td>
+<td>{% if p.status == "submitted" %}
+<form method="post" action="{% url 'update_payment_status' p.pk %}" class="payment-review-form">{% csrf_token %}
+<input type="text" name="admin_note" placeholder="Optional staff note / rejection reason">
+<button class="btn small" name="status" value="verified">Approve & confirm</button>
+<button class="btn small danger" name="status" value="rejected">Reject</button>
+</form>{% else %}Reviewed{% endif %}</td>
+</tr>
+{% empty %}<tr><td colspan="7">No payment records yet.</td></tr>{% endfor %}</tbody></table></div>
+
+<h2>Recent booking requests</h2>
+<div class="tablewrap"><table><thead><tr><th>Reference</th><th>Customer</th><th>Booking</th><th>Dates</th><th>Amount</th><th>Status</th><th>Update</th></tr></thead><tbody>
+{% for b in bookings %}<tr><td>{{ b.reference }}</td><td>{{ b.customer.username }}</td><td>{% if b.tour %}{{ b.tour.title }}{% elif b.hotel %}{{ b.hotel.name }}{% else %}Custom trip{% endif %}</td><td>{{ b.start_date }}</td><td>${{ b.total_amount|floatformat:2 }}</td><td>{{ b.get_status_display }} / {{ b.get_payment_status_display }}</td><td><form method="post" action="{% url 'update_booking_status' b.reference %}" class="inlineform">{% csrf_token %}<select name="status">{% for value,label in b.STATUS %}<option value="{{ value }}" {% if b.status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select><button class="btn small">Save</button></form></td></tr>
+{% empty %}<tr><td colspan="7">No booking requests yet.</td></tr>{% endfor %}
+</tbody></table></div>
+<p class="muted">Manage destinations, tours, hotels, bookings, payments, inquiries and reviews in <a class="textlink" href="/django-admin/">Django Admin</a>.</p>
+<h2>Unresolved inquiries</h2>{% for i in inquiries %}<div class="inquiryline"><b>{{ i.name }} · {{ i.get_inquiry_type_display }}</b><span>{{ i.email }}</span><p>{{ i.details }}</p></div>{% empty %}<p class="muted">No unresolved inquiries.</p>{% endfor %}
+</div></section>
+{% endblock %}

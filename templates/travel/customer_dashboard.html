@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}My Account | KhmerGlobe{% endblock %}
+{% block content %}
+<section class="section"><div class="container">
+<span class="eyebrow">Customer account</span><h1>Hello, {{ user.first_name|default:user.username }}</h1>
+<p class="muted">Your complete KhmerGlobe booking history and payment records.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Reference</th><th>Trip / Hotel</th><th>Start date</th><th>Total</th><th>Booking status</th><th>Payment</th><th>Actions</th></tr></thead>
+<tbody>{% for b in bookings %}<tr>
+<td><strong>{{ b.reference }}</strong></td>
+<td>{% if b.tour %}{{ b.tour.title }}{% elif b.hotel %}{{ b.hotel.name }}{% else %}Custom trip{% endif %}</td>
+<td>{{ b.start_date }}</td><td>${{ b.total_amount }}</td>
+<td><span class="status {{ b.status }}">{{ b.get_status_display }}</span></td>
+<td>{{ b.get_payment_status_display }}</td>
+<td class="history-actions"><a class="textlink" href="{% url 'booking_detail' b.reference %}">Details</a>{% if b.payment_status == "paid" %}<a class="textlink" href="{% url 'booking_invoice' b.reference %}">Invoice PDF</a>{% else %}<a class="textlink" href="{% url 'trip_checkout' b.reference %}">Continue payment</a>{% endif %}</td>
+</tr>{% empty %}<tr><td colspan="7">You have no booking history yet. <a class="textlink" href="{% url 'trip_builder' %}">Build your trip</a>.</td></tr>{% endfor %}</tbody></table></div>
+</div></section>
+{% endblock %}

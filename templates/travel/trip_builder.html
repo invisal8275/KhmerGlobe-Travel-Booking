@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Build Your Trip | KhmerGlobe{% endblock %}
+{% block content %}
+<section class="pagehero"><div class="container"><span class="eyebrow">Your journey, your choices</span><h1>Build your own trip</h1><p>Choose your destination, dates, hotel, transport and experiences. Your estimated total updates as you go.</p></div></section>
+<section class="section tripbuilder-section"><div class="container tripbuilder-layout">
+{% if not user.is_authenticated %}<div class="login-reminder">You can explore the trip builder now. Please <a href="{% url 'login' %}">sign in</a> or <a href="{% url 'register' %}">create an account</a> before submitting your booking.</div>{% endif %}
+<form method="post" id="tripBuilderForm" class="tripbuilder-form">
+{% csrf_token %}
+<div class="builder-step"><div class="step-heading"><span>01</span><div><h2>Where would you like to go?</h2><p>Start with your destination and travel dates.</p></div></div>
+<div class="builder-fields">
+<div class="field-wide"><label for="destination">Destination *</label><select id="destination" name="destination_id" required><option value="">Choose destination</option>{% for d in destinations %}<option value="{{ d.pk }}">{{ d.name }}, {{ d.country }}</option>{% endfor %}</select></div>
+<div><label for="start_date">Departure date *</label><input type="date" id="start_date" name="start_date" min="{{ today }}" value="{{ today }}" required></div>
+<div><label for="days">Duration</label><select id="days" name="days"><option value="1">1 day</option><option value="2">2 days / 1 night</option><option value="3" selected>3 days / 2 nights</option><option value="4">4 days / 3 nights</option><option value="5">5 days / 4 nights</option><option value="6">6 days / 5 nights</option><option value="7">7 days / 6 nights</option><option value="8">8 days / 7 nights</option><option value="10">10 days / 9 nights</option><option value="12">12 days / 11 nights</option><option value="14">14 days / 13 nights</option><option value="21">21 days / 20 nights</option></select></div>
+<div><label for="travelers">Travellers</label><input type="number" id="travelers" name="travelers" min="1" max="50" value="2" required></div>
+</div></div>
+
+<div class="builder-step"><div class="step-heading"><span>02</span><div><h2>Choose a tour package</h2><p>Pick a curated itinerary or create an independent trip.</p></div></div>
+<label for="tour">Tour package</label><select id="tour" name="tour_id"><option value="">Custom trip — no fixed tour package</option>{% for t in tours %}<option value="{{ t.pk }}" data-destination="{{ t.destination_id }}" data-price="{{ t.price_per_person }}" data-days="{{ t.duration_days }}">{{ t.title }} · {{ t.duration_days }} days · ${{ t.price_per_person }} / person</option>{% endfor %}</select><p class="field-hint">A selected tour package is multiplied by the number of travellers.</p></div>
+
+<div class="builder-step"><div class="step-heading"><span>03</span><div><h2>Where would you like to stay?</h2><p>Select a hotel and room count, or arrange your own accommodation.</p></div></div>
+<label for="hotel">Hotel / accommodation</label><select id="hotel" name="hotel_id"><option value="">No hotel — arrange my own</option>{% for h in hotels %}<option value="{{ h.pk }}" data-destination="{{ h.destination_id }}" data-price="{{ h.price_per_night }}">{{ h.name }} · {{ h.destination.name }} · {{ h.category }} stars · from ${{ h.price_per_night }}/night</option>{% endfor %}</select>
+<div class="builder-fields compact"><div><label for="rooms">Rooms</label><input type="number" id="rooms" name="rooms" min="1" max="25" value="1"></div><div class="field-hint align-end" id="nightHint">Select duration to calculate nights.</div></div></div>
+
+<div class="builder-step"><div class="step-heading"><span>04</span><div><h2>Choose transportation</h2><p>Pick the travel style that suits your group.</p></div></div>
+<div class="choice-grid transport-grid">
+{% for code,opt in transport_options.items %}
+<label class="choice-card"><input type="radio" name="transport" value="{{ code }}" data-rate="{{ opt.rate }}" data-capacity="{{ opt.capacity }}" data-basis="{{ opt.basis }}" {% if code == "bus" %}checked{% endif %}><span class="choice-title">{% if code == "bus" %}🚌{% elif code == "tuk_tuk" %}🛺{% elif code == "motorbike" %}🏍️{% elif code == "private_car" %}🚗{% elif code == "van" %}🚐{% elif code == "boat" %}🚤{% else %}✈️{% endif %} {{ opt.label }}</span><small>{{ opt.basis }}{% if opt.rate %} · ${{ opt.rate }}{% else %} · quote required{% endif %}</small></label>
+{% endfor %}
+</div></div>
+
+<div class="builder-step"><div class="step-heading"><span>05</span><div><h2>Add activities and experiences</h2><p>Optional extras are added to your trip estimate.</p></div></div>
+<div class="choice-grid">
+{% for code,opt in activity_options.items %}
+<label class="choice-card activity-card"><input type="checkbox" name="activities" value="{{ code }}" data-rate="{{ opt.rate }}"><span class="choice-title">{{ opt.label }}</span><small>{{ opt.basis }} · ${{ opt.rate }}</small></label>
+{% endfor %}
+</div></div>
+
+<div class="builder-step"><div class="step-heading"><span>06</span><div><h2>Choose how to pay</h2><p>Choose your preferred method for the final checkout.</p></div></div>
+<div class="choice-grid payment-choice-grid">
+<label class="choice-card payment-choice"><input type="radio" name="payment_method" value="visa_card" checked><span class="payment-mark visa-mark">VISA</span><span class="choice-title">Visa / Mastercard</span><small>Secure card checkout through ABA PayWay once merchant credentials are activated.</small></label>
+<label class="choice-card payment-choice"><input type="radio" name="payment_method" value="khqr"><span class="payment-mark khqr-mark">KHQR</span><span class="choice-title">KHQR payment</span><small>Scan a dynamic QR using a supported Cambodian banking app after gateway activation.</small></label>
+</div>
+</div>
+<div class="builder-actions"><button class="btn large" type="submit">Continue to checkout →</button><p class="field-hint">You will review the full estimate and booking details before payment.</p></div>
+</form>
+
+<aside class="trip-summary-card">
+<div class="summary-top"><span class="eyebrow">Live trip estimate</span><h2>Your trip summary</h2><p>Estimated in USD</p></div>
+<div class="summary-line"><span>Destination</span><strong id="sumDestination">Not selected</strong></div>
+<div class="summary-line"><span>Travel dates</span><strong id="sumDates">Choose date</strong></div>
+<div class="summary-line"><span>Travellers</span><strong id="sumTravelers">2</strong></div>
+<div class="summary-divider"></div>
+<div class="summary-line"><span>Tour package</span><strong id="sumTour">$0.00</strong></div>
+<div class="summary-line"><span>Hotel</span><strong id="sumHotel">$0.00</strong></div>
+<div class="summary-line"><span>Transportation</span><strong id="sumTransport">$0.00</strong></div>
+<div class="summary-line"><span>Activities</span><strong id="sumActivities">$0.00</strong></div>
+<div class="summary-divider"></div>
+<div class="summary-total"><span>Estimated total</span><strong id="sumTotal">$0.00</strong></div>
+<p class="summary-disclaimer">Planning estimate only. Supplier availability, seasonal pricing, taxes and flight quotations are confirmed by our team before payment. Flight option is quoted separately.</p>
+</aside>
+</div></section>
+<script>
+(function(){
+ const $=id=>document.getElementById(id);
+ const destination=$("destination"), tour=$("tour"), hotel=$("hotel"), date=$("start_date"), days=$("days"), travelers=$("travelers"), rooms=$("rooms");
+ const money=n=>"$"+Number(n||0).toFixed(2);
+ function filterOptions(select){
+   [...select.options].forEach((o,i)=>{if(i===0)return; o.hidden=!!(destination.value && o.dataset.destination!==destination.value);});
+   if(select.selectedOptions[0] && select.selectedOptions[0].hidden) select.value="";
+ }
+ function calculate(){
+   const d=destination.selectedOptions[0]?.textContent||"Not selected";
+   const people=Math.max(1,Number(travelers.value||1)), dayCount=Math.max(1,Number(days.value||1)), nights=Math.max(dayCount-1,0), roomCount=Math.max(1,Number(rooms.value||1));
+   const t=tour.selectedOptions[0], h=hotel.selectedOptions[0];
+   const tourCost=t && t.value ? Number(t.dataset.price||0)*people : 0;
+   const hotelCost=h && h.value ? Number(h.dataset.price||0)*nights*roomCount : 0;
+   const selectedTransport=document.querySelector('input[name="transport"]:checked');
+   let transportCost=0;
+   if(selectedTransport){
+     const rate=Number(selectedTransport.dataset.rate||0), cap=Number(selectedTransport.dataset.capacity||1);
+     if(selectedTransport.value==="bus") transportCost=rate*people*dayCount;
+     else if(["tuk_tuk","private_car","van","motorbike"].includes(selectedTransport.value)) transportCost=rate*Math.ceil(people/cap)*dayCount;
+     else if(selectedTransport.value==="boat") transportCost=rate*people;
+   }
+   let activityCost=0;
+   document.querySelectorAll('input[name="activities"]:checked').forEach(a=>{
+     const rate=Number(a.dataset.rate||0);
+     if(a.value==="local_guide") activityCost+=rate*dayCount;
+     else if(a.value==="airport_transfer") activityCost+=rate*Math.ceil(people/3);
+     else activityCost+=rate*people;
+   });
+   $("sumDestination").textContent=destination.value?d:"Not selected";
+   $("sumDates").textContent=date.value ? new Date(date.value+"T00:00:00").toLocaleDateString() : "Choose date";
+   $("sumTravelers").textContent=people+" traveller"+(people===1?"":"s");
+   $("sumTour").textContent=money(tourCost); $("sumHotel").textContent=money(hotelCost);
+   $("sumTransport").textContent=money(transportCost); $("sumActivities").textContent=money(activityCost);
+   $("sumTotal").textContent=money(tourCost+hotelCost+transportCost+activityCost);
+   $("nightHint").textContent=nights+" hotel night"+(nights===1?"":"s")+" calculated from trip duration.";
+ }
+ destination.addEventListener("change",()=>{filterOptions(tour);filterOptions(hotel);calculate();});
+ tour.addEventListener("change",()=>{const selected=tour.selectedOptions[0];if(selected && selected.value && selected.dataset.days){days.value=selected.dataset.days;}calculate();});
+ [hotel,date,days,travelers,rooms].forEach(el=>el.addEventListener("change",calculate));
+ document.querySelectorAll('input[name="transport"],input[name="activities"]').forEach(el=>el.addEventListener("change",calculate));
+ calculate();
+})();
+</script>
+{% endblock %}

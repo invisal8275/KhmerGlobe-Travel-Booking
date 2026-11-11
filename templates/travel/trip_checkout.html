@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Checkout {{ booking.reference }} | KhmerGlobe{% endblock %}
+{% block content %}
+<section class="section"><div class="container narrow checkout-page">
+<span class="eyebrow">Final step · Secure checkout</span><h1>Review your trip</h1>
+<div class="checkout-card">
+<div class="checkout-success-icon">✓</div><h2>Your trip has been saved</h2><p>Booking reference <strong>{{ booking.reference }}</strong></p>
+<div class="checkout-summary">
+<h3>{{ trip.destination|default:"Your selected destination" }}, {{ trip.country }}</h3>
+<p>{{ trip.tour }} · {{ trip.days }} days · {{ trip.travelers }} traveller(s)</p>
+<p>{{ trip.start_date }} to {{ trip.end_date }}</p>
+{% if trip.hotel %}<p>Hotel: {{ trip.hotel }} · {{ trip.rooms }} room(s) · {{ trip.nights }} night(s)</p>{% endif %}
+<p>Transport: {{ trip.transport }}</p>
+{% if trip.activities %}<p>Activities: {% for a in trip.activities %}{{ a.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>{% endif %}
+</div>
+<h3>Price breakdown</h3>
+<div class="summary-line"><span>Tour package</span><strong>${{ trip.breakdown.tour }}</strong></div>
+<div class="summary-line"><span>Hotel</span><strong>${{ trip.breakdown.hotel }}</strong></div>
+<div class="summary-line"><span>Transportation</span><strong>${{ trip.breakdown.transport }}</strong></div>
+<div class="summary-line"><span>Activities</span><strong>${{ trip.breakdown.activities }}</strong></div>
+<div class="summary-total"><span>Full payment due now</span><strong>${{ booking.total_amount }}</strong></div>
+<p class="summary-disclaimer">{{ trip.price_note }}</p>
+<div class="payment-selected"><strong>Selected payment:</strong> {% if booking.payment_method == "visa_card" %}Visa / Mastercard{% elif booking.payment_method == "khqr" %}KHQR{% else %}{{ booking.get_payment_method_display }}{% endif %}</div>
+{% if booking.payment_method == "khqr" or booking.payment_method == "bank" %}
+<div class="khqr-checkout-panel">
+  <div class="khqr-panel-heading"><div><span class="eyebrow">Cambodian QR payment</span><h3>Scan to pay with KHQR</h3><p>Use ABA Mobile, ACLEDA mobile banking, or another banking app that supports KHQR.</p></div><span class="khqr-chip">KHQR</span></div>
+  <button type="button" class="btn block" id="showKhqrButton">Pay with ABA / ACLEDA KHQR</button>
+  <div class="khqr-amount-due"><span>Full amount to pay</span><strong>${{ booking.total_amount }}</strong></div>
+  <p class="summary-disclaimer">This is your supplied static ACLEDA KHQR. Confirm the recipient name in your banking app. Enter the exact full amount shown above. The QR itself does not dynamically encode the booking amount.</p>
+  <form method="post" enctype="multipart/form-data" class="khqr-proof-form">
+    {% csrf_token %}
+    <label for="transaction_reference">Bank transaction / reference number</label>
+    <input type="text" name="transaction_reference" id="transaction_reference" maxlength="120" placeholder="Enter the reference after you pay" required>
+    <label for="receipt_file">Upload payment receipt (JPG, PNG or PDF)</label>
+    <input type="file" name="receipt_file" id="receipt_file" accept=".jpg,.jpeg,.png,.pdf" required>
+    <button type="submit" class="btn block">Submit payment for verification</button>
+  </form>
+  {% if payment and payment.status == "submitted" %}
+  <p class="payment-submitted-note">Payment submitted. Reference: <strong>{{ payment.transaction_reference }}</strong>. Receipt: {% if payment.receipt_url %}<a href="{{ payment.receipt_url }}" target="_blank" rel="noopener">View uploaded receipt</a>{% else %}Not attached{% endif %}. Awaiting staff verification.</p>
+  {% elif payment and payment.status == "rejected" %}<p class="gateway-notice">Your previous payment proof was rejected. Please check the reason with our team and submit a new receipt.</p>{% endif %}
+</div>
+<div class="khqr-modal" id="khqrModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="khqrModalTitle">
+  <div class="khqr-modal-backdrop" data-close-khqr></div>
+  <div class="khqr-modal-card">
+    <button type="button" class="khqr-modal-close" aria-label="Close QR code" data-close-khqr>×</button>
+    <span class="eyebrow">KhmerGlobe checkout</span><h2 id="khqrModalTitle">Scan to pay with KHQR</h2>
+    <p>Open ABA Mobile, ACLEDA mobile banking or another KHQR-compatible app and scan this code.</p>
+    <img src="{% static 'travel/images/payments/acleda-khqr-account.jpg' %}" alt="ACLEDA Bank KHQR payment QR code">
+    <div class="khqr-modal-recipient">Recipient: <strong>IN RATANAKVISAL</strong></div>
+    <div class="khqr-amount-due"><span>Pay this full amount</span><strong>${{ booking.total_amount }}</strong></div>
+    <p class="summary-disclaimer">Confirm recipient and amount before sending. This static QR does not automatically attach your booking reference.</p>
+    <button type="button" class="btn block" data-close-khqr>Close</button>
+  </div>
+</div>
+{% elif booking.payment_method == "visa_card" %}
+<div class="gateway-notice"><strong>Visa / Mastercard checkout is not activated yet.</strong><br>Your booking is saved, but no card has been charged. Card payments require an active ABA PayWay merchant integration.</div>
+{% else %}
+<div class="khqr-checkout-panel">
+  <div class="khqr-panel-heading"><div><span class="eyebrow">Cambodian QR payment</span><h3>Pay by KHQR</h3><p>Open ABA Mobile, ACLEDA mobile banking, or another KHQR-compatible app.</p></div><span class="khqr-chip">KHQR</span></div>
+  <button type="button" class="btn block" id="showKhqrButton">Show payment QR code</button>
+  <div class="khqr-amount-due"><span>Full amount to pay</span><strong>${{ booking.total_amount }}</strong></div>
+  <p class="summary-disclaimer">The supplied ACLEDA static QR will open when you click the button. Enter the exact amount shown and verify the recipient before paying.</p>
+</div>
+<div class="khqr-modal" id="khqrModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="khqrModalTitle">
+  <div class="khqr-modal-backdrop" data-close-khqr></div>
+  <div class="khqr-modal-card">
+    <button type="button" class="khqr-modal-close" aria-label="Close QR code" data-close-khqr>×</button>
+    <span class="eyebrow">KhmerGlobe checkout</span><h2 id="khqrModalTitle">Scan to pay with KHQR</h2>
+    <p>Open ABA Mobile, ACLEDA mobile banking or another KHQR-compatible app and scan this code.</p>
+    <img src="{% static 'travel/images/payments/acleda-khqr-account.jpg' %}" alt="ACLEDA Bank KHQR payment QR code">
+    <div class="khqr-modal-recipient">Recipient: <strong>IN RATANAKVISAL</strong></div>
+    <div class="khqr-amount-due"><span>Pay this full amount</span><strong>${{ booking.total_amount }}</strong></div>
+    <p class="summary-disclaimer">Confirm recipient and amount before sending. This static QR does not automatically attach your booking reference.</p>
+    <button type="button" class="btn block" data-close-khqr>Close</button>
+  </div>
+</div>
+{% endif %}
+<p class="field-hint">100% full payment is due. The booking remains pending until payment and supplier details are verified.</p>
+{% if booking.payment_status == "paid" %}<div class="payment-submitted-note">Payment verified. <a href="{% url 'booking_invoice' booking.reference %}">Download your invoice (PDF)</a></div>{% endif %}
+</div>
+<a class="textlink" href="{% url 'booking_detail' booking.reference %}">View booking details →</a>
+</div></section>
+<script>
+(function(){
+ const modal=document.getElementById("khqrModal");
+ if(!modal)return;
+ function openModal(){modal.classList.add("is-open");modal.setAttribute("aria-hidden","false");document.body.classList.add("khqr-modal-open");}
+ function closeModal(){modal.classList.remove("is-open");modal.setAttribute("aria-hidden","true");document.body.classList.remove("khqr-modal-open");}
+ document.getElementById("showKhqrButton")?.addEventListener("click",openModal);
+ modal.querySelectorAll("[data-close-khqr]").forEach(el=>el.addEventListener("click",closeModal));
+ document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
+ openModal();
+})();
+</script>
+{% endblock %}
